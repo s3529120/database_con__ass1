@@ -2,7 +2,9 @@ package database_con_ass2;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,12 +12,22 @@ import java.util.Date;
 public class database_con_ass1 {
 
 	public static void main(String[] args) {
+		//Initialize
 		ArrayList<Business_Name> list;
 		Long start,end;
+		
+		//Set start timer
 		start=System.currentTimeMillis();
+		//Read CSV into program
 		list=readCSV(args[0]);
+		//Set end timer calculate and display time taken
 		end=System.currentTimeMillis();
-		System.out.println(end-start);
+		System.out.println("Load CSV time"+(end-start));
+		
+		//Set start timer
+		start=System.currentTimeMillis();
+		//Insert into Dynamo
+		insertDerby(list);
 
 	}
 
@@ -76,5 +88,20 @@ public class database_con_ass1 {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	public static void insertDerby(ArrayList<Business_Name> list){
+		String derby="jdbc:derby:businessnames";
+		
+		try{
+			Connection con= DriverManager.getConnection(derby);
+			Statement state=con.createStatement();
+			for(Business_Name name: list){
+				int res=state.executeUpdate("INSERT INTO names() VALUES("+name+")");
+			}
+			state.close();
+		}catch(Exception e){
+			
+		}
 	}
 }
