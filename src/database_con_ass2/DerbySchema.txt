@@ -1,0 +1,6 @@
+BusinessNumbers(name,abn)
+RegistrationStatus(name,status)
+RegistrationDates(name,registrationDate)
+RenewalDates(name,renewalDate)
+CancellationDates(name,cancelDate)
+FormerStates(name,formerStateNum,PreviousRegState)
