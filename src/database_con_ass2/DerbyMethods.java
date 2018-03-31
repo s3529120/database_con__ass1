@@ -11,7 +11,7 @@ public class DerbyMethods {
 	 * @list list of business names objects to be added to database
 	 */
 	public static void insertDerby(ArrayList<Business_Name> list){
-		String derby="jdbc:derby:businessnames";
+		String derby="jdbc:derby:businessname";
 		
 		try{
 			
@@ -51,7 +51,7 @@ public class DerbyMethods {
 				}
 				//Former state number and state of registration
 				if(name.getPre_state_reg()!=null||name.getForm_state_num()!=null){
-					res=state.executeUpdate("INSERT INTO FormerStates(name,formerStateNum,PreviousRegState) "
+					res=state.executeUpdate("INSERT INTO FormerStates(name,formerStateNum,previousRegState) "
 							+ "VALUES("+name.getBus_name()+","+name.getForm_state_num()+","+name.getPre_state_reg()+");");
 				}
 			}
