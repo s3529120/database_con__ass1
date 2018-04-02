@@ -1,4 +1,4 @@
-BusinessNumbers(name,abn)
+BusinessNumbers(name TEXT,abn)
 RegistrationStatus(name,status)
 RegistrationDates(name,registrationDate)
 RenewalDates(name,renewalDate)

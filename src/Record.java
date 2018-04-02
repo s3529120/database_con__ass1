@@ -1,8 +1,8 @@
-package database_con_ass2;
+
 
 import java.util.Date;
 
-public class Business_Name {
+public class Record {
 	private String bus_name;
 	private String status;
 	private Date reg_date;
@@ -12,7 +12,7 @@ public class Business_Name {
 	private String pre_state_reg;
 	private String abn;
 	
-	public Business_Name(String bus_name, String status, Date reg_date, Date cancel_date, Date ren_date, String form_state_num,
+	public Record(String bus_name, String status, Date reg_date, Date cancel_date, Date ren_date, String form_state_num,
 			String pre_state_reg, String abn) {
 		this.setBus_name(bus_name);
 		this.setStatus(status);

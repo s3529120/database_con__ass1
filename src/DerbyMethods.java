@@ -1,8 +1,9 @@
-package database_con_ass2;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class DerbyMethods {
@@ -10,8 +11,10 @@ public class DerbyMethods {
 	/*Insert records into derby database
 	 * @list list of business names objects to be added to database
 	 */
-	public static void insertDerby(ArrayList<Business_Name> list){
-		String derby="jdbc:derby:businessname";
+	public static void insertDerby(ArrayList<Record> list){
+		String derby="jdbc:derby:businessnames";
+		String pattern = "yyyy-MM-dd";
+		SimpleDateFormat formatter = new SimpleDateFormat(pattern);
 		
 		try{
 			
@@ -20,45 +23,45 @@ public class DerbyMethods {
 			Statement state=con.createStatement();
 			
 			//For each business name in list
-			for(Business_Name name: list){
+			for(Record name: list){
 				int res;
-				
+				res=state.executeUpdate("INSERT INTO BusinessNames(name) VALUES('"+name.getBus_name()+"')");
 				//Insert record if values from table have been set
 				//ABN
 				if(name.getAbn()!=null){
 					res=state.executeUpdate("INSERT INTO BusinessNumbers(name,abn) "
-							+ "VALUES("+name.getBus_name()+","+name.getAbn()+");");
+							+ "VALUES('"+name.getBus_name()+"','"+name.getAbn()+"')");
 				}
 				//Status
 				if(name.getStatus()!=null){
 					res=state.executeUpdate("INSERT INTO RegistrationStatus(name,status) "
-							+ "VALUES("+name.getBus_name()+","+name.getStatus()+");");
+							+ "VALUES('"+name.getBus_name()+"','"+name.getStatus()+"')");
 				}
 				//Registration date
 				if(name.getReg_date()!=null){
 					res=state.executeUpdate("INSERT INTO RegistrationDates(name,registrationDate) "
-							+ "VALUES("+name.getBus_name()+","+name.getReg_date()+");");
+							+ "VALUES('"+name.getBus_name()+"','"+formatter.format(name.getReg_date())+"')");
 				}
 				//Renewal date
 				if(name.getRen_date()!=null){
 					res=state.executeUpdate("INSERT INTO RenewalDates(name,renewalDate) "
-							+ "VALUES("+name.getBus_name()+","+name.getRen_date()+");");
+							+ "VALUES('"+name.getBus_name()+"','"+formatter.format(name.getRen_date())+"')");
 				}
 				//Cancellation date
 				if(name.getCancel_date()!=null){
 					res=state.executeUpdate("INSERT INTO CancellationDates(name,cancelDate) "
-							+ "VALUES("+name.getBus_name()+","+name.getCancel_date()+");");
+							+ "VALUES('"+name.getBus_name()+"','"+formatter.format(name.getCancel_date())+"')");
 				}
 				//Former state number and state of registration
 				if(name.getPre_state_reg()!=null||name.getForm_state_num()!=null){
 					res=state.executeUpdate("INSERT INTO FormerStates(name,formerStateNum,previousRegState) "
-							+ "VALUES("+name.getBus_name()+","+name.getForm_state_num()+","+name.getPre_state_reg()+");");
+							+ "VALUES('"+name.getBus_name()+"','"+name.getForm_state_num()+"','"+name.getPre_state_reg()+"')");
 				}
 			}
 			//close statement
 			state.close();
 		}catch(Exception e){
-			System.err.println("Insertion into derby failed");
+			//System.err.println("Insertion into derby failed");
 		}
 	}
 	
